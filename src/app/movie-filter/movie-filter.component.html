@@ -1,0 +1,12 @@
+<h3>Filters</h3>
+
+<div class="movie-filter">
+  Title
+  <input type="text" [(ngModel)]="title" (input)="onMovieFilterChange()" />
+  Release year
+  <input
+    type="number"
+    [(ngModel)]="releaseYear"
+    (input)="onMovieFilterChange()"
+  />
+</div>

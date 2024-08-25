@@ -1,0 +1,17 @@
+<div class="container">
+  <app-movie-filter
+    (movieFilterChanged)="filterMovies($event.title, $event.releaseYear)"
+  ></app-movie-filter>
+
+  <ul>
+    <li *ngFor="let movie of filteredMovies$ | async">
+      <h3>{{ movie.title }}</h3>
+      <p>
+        Release date: {{ movie.releaseDate }} Budget:
+        {{ movie.budget | formatMoney }} Duration:
+        {{ movie.duration | formatDuration }}
+      </p>
+      <button [routerLink]="['/movies', movie.id]">Details</button>
+    </li>
+  </ul>
+</div>
