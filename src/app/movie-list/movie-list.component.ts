@@ -18,8 +18,8 @@ import { MovieService } from '../services/movie.service';
   styleUrl: './movie-list.component.css'
 })
 export class MovieListComponent implements OnInit {
-  movies$: Observable<Movie[]> | undefined;
-  filteredMovies$: Observable<Movie[]> | undefined;
+  movies$: Observable<Movie[]> = of([]);
+  filteredMovies$: Observable<Movie[]> = of([]);
 
   constructor(private movieService: MovieService) { }
 
@@ -33,32 +33,31 @@ export class MovieListComponent implements OnInit {
     const searchTitle$ = of(titleFilterText).pipe(startWith(''));
     const searchYear$ = of(releaseYearFilterText).pipe(startWith(''));
 
+    this.filteredMovies$ = combineLatest(this.movies$, searchTitle$, searchYear$,
+      (movies, filterTitle, filterYear) => {
+        return movies.filter(movie => {
 
-    if (this.movies$) {
-      this.filteredMovies$ = combineLatest(this.movies$, searchTitle$, searchYear$,
-        (movies, filterTitle, filterYear) => {
-          return movies.filter(movie => {
+          //Conditions
+          const filterTitleCondition = (filterTitle && filterTitle.length > 1) ? true : false;
+          const filterYearCondition = filterYear;
 
-            //Conditions
-            let filterTitleCondition = (filterTitle && filterTitle.length > 1) ? true : false;
-            let filterYearCondition = filterYear;
+          // Matches
+          const matchesTitle = movie.title.toLowerCase().includes(filterTitle.toLowerCase());
+          const matchesYear = movie.releaseDate.startsWith(filterYear);
 
-            // Matches
-            const matchesTitle = movie.title.toLowerCase().includes(filterTitle.toLowerCase());
-            const matchesYear = movie.releaseDate.startsWith(filterYear);
-
-            if (filterTitleCondition && filterYearCondition) {
-              return true;
-            }
-            else if (filterTitleCondition && !filterYearCondition) {
-              return matchesTitle;
-            } else if (!filterTitleCondition && filterYearCondition) {
-              return matchesYear;
-            }
+          if (filterTitleCondition && filterYearCondition) {
             return true;
-          })
+          }
+          else if (filterTitleCondition && !filterYearCondition) {
+            return matchesTitle;
+          } else if (!filterTitleCondition && filterYearCondition) {
+            return matchesYear;
+          }
+          return true;
         })
-    }
+      });
+
+
   }
 
 }
