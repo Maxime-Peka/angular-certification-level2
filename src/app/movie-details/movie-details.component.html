@@ -1,12 +1,12 @@
-<body>
-  <div class="container">
-    <button [routerLink]="['/']" class="btn btn-light mb-3">&larr; Back</button>
+<div class="container">
+  <button [routerLink]="['/']" class="btn btn-light mb-3">&larr; Back</button>
 
-    <h2>{{ movie?.title }}</h2>
+  <section *ngIf="movie; else noMovie">
+    <h2>{{ movie.title }}</h2>
 
     <p>
-      <img src="{{ movie?.poster }}" />
-      <strong>Summary:</strong> {{ movie?.summary }}
+      <img src="{{ movie.poster }}" />
+      <strong>Summary:</strong> {{ movie.summary }}
     </p>
 
     <div>
@@ -15,26 +15,28 @@
         <tbody>
           <tr>
             <th>Box office</th>
-            <td>{{ movie ? (movie.boxOffice | formatMoney) : "" }}</td>
+            <td>{{ movie.boxOffice | formatMoney }}</td>
           </tr>
           <tr>
             <th>Budget</th>
-            <td>{{ movie ? (movie.budget | formatMoney) : "" }}</td>
+            <td>{{ movie.budget | formatMoney }}</td>
           </tr>
           <tr>
             <th>Duration</th>
-            <td>{{ movie ? (movie.duration | formatDuration) : "" }}</td>
+            <td>{{ movie.duration | formatDuration }}</td>
           </tr>
           <tr>
             <th>Producers</th>
-            <td>{{ movie?.producers?.join(", ") }}</td>
+            <td>{{ movie.producers.join(", ") }}</td>
           </tr>
           <tr>
             <th>Cinematographers</th>
-            <td>{{ movie?.cinematographers?.join(", ") }}</td>
+            <td>{{ movie.cinematographers.join(", ") }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-</body>
+  </section>
+
+  <ng-template #noMovie> No movie found. </ng-template>
+</div>

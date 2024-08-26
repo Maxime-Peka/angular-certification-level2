@@ -13,20 +13,20 @@ export class MovieService {
 
   getMovies(): Observable<Movie[]> {
     return this.http.get<any[]>(this.baseUrl).pipe(
-      map(movies => movies.map(movie => ({
+      map(movies => movies ? movies.map(movie => ({
         ...movie,
         releaseDate: movie.release_date,
-      })))
+      })) : [])
     );
   }
 
   getMovieDetail(id: string): Observable<Movie> {
     return this.http.get<any>(this.baseUrl + '/' + id).pipe(
-      map(movie => ({
+      map(movie => movie ? ({
         ...movie,
         releaseDate: movie.release_date,
         boxOffice: movie.box_office
-      }))
+      }) : null)
     );
   }
 }
