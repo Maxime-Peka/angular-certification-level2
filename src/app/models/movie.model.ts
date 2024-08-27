@@ -3,8 +3,8 @@ export interface Movie {
   title: string;
   duration: string;
   budget: string;
-  releaseDate: string;
-  boxOffice: string;
+  release_date: string;
+  box_office: string;
   cinematographers: string[];
   poster: string;
   producers: string[];

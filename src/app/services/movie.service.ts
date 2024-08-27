@@ -12,21 +12,14 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
   getMovies(): Observable<Movie[]> {
-    return this.http.get<any[]>(this.baseUrl).pipe(
-      map(movies => movies ? movies.map(movie => ({
-        ...movie,
-        releaseDate: movie.release_date,
-      })) : [])
+    return this.http.get<Movie[]>(this.baseUrl).pipe(
+      map(movies => movies)
     );
   }
 
-  getMovieDetail(id: string): Observable<Movie> {
-    return this.http.get<any>(this.baseUrl + '/' + id).pipe(
-      map(movie => movie ? ({
-        ...movie,
-        releaseDate: movie.release_date,
-        boxOffice: movie.box_office
-      }) : null)
+  getMovieDetail(id: string): Observable<Movie | undefined> {
+    return this.http.get<Movie | undefined>(this.baseUrl + '/' + id).pipe(
+      map(movie => movie ? movie : undefined)
     );
   }
 }

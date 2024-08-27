@@ -38,7 +38,7 @@ export class MovieListComponent implements OnInit {
         return movies.filter(movie => {
 
           const titleMatches = filterTitle ? movie.title.toLowerCase().includes(filterTitle.toLowerCase()) : true;
-          const yearMatches = filterYear ? new RegExp(`^${filterYear}`).test(movie.releaseDate) : true;
+          const yearMatches = filterYear ? new RegExp(`^${filterYear}`).test(movie.release_date) : true;
           return titleMatches && yearMatches;
         })
       });

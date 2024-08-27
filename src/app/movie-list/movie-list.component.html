@@ -7,7 +7,7 @@
     <li *ngFor="let movie of filteredMovies$ | async">
       <h3>{{ movie.title }}</h3>
       <p>
-        Release date: {{ movie.releaseDate }} Budget:
+        Release date: {{ movie.release_date }} Budget:
         {{ movie.budget | formatMoney }} Duration:
         {{ movie.duration | formatDuration }}
       </p>
